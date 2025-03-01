@@ -6,30 +6,32 @@ import { GetRequest } from "../ApiRequests";
 import { useSelector } from "react-redux";
 
 function NavBar({ setSearchResults, wishlistCount }) {
-  const { token, logout } = useAuth();
+  const { token, logout } = useAuth(); // Get authentication token and logout function from context
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-  const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart.items); // Get cart items from Redux store
 
   const isLoginPage = location.pathname === "/login" || location.pathname === "/register";
 
+  // Handle product search
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const data = await GetRequest("products");
+      const data = await GetRequest("products"); // Fetch all products
       const filteredProducts = data.filter((product) =>
         product.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setSearchResults(filteredProducts);
-      navigate("/products");
+      navigate("/products"); // Redirect to products page with filtered results
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
 
+  // Redirect to cart or show alert if user is not logged in
   const handleShopClick = () => {
     if (!token) {
       alert("You need to log in to access the cart.");
@@ -41,19 +43,20 @@ function NavBar({ setSearchResults, wishlistCount }) {
   return (
     <nav className="bg-white shadow-md">
       <div className="container mx-auto px-4 md:px-16 lg:px-24 py-4 flex justify-between items-center">
-       
+        
+        {/* Logo */}
         <div className="text-lg font-bold">
           <Link to="/">E-Shop</Link>
         </div>
 
-     
+        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="focus:outline-none">
             <FaBars className="text-lg" />
           </button>
         </div>
 
-       
+        {/* Search Bar (hidden on login/register page) */}
         {!isLoginPage && (
           <div className="relative flex-1 mx-4 hidden md:block">
             <form onSubmit={handleSearch} className="relative">
@@ -71,9 +74,10 @@ function NavBar({ setSearchResults, wishlistCount }) {
           </div>
         )}
 
-       
+        {/* Navigation Icons */}
         <div className="flex items-center space-x-6 relative">
-       
+          
+          {/* Wishlist Icon */}
           <Link to="/wishlist" className="relative">
             <FaHeart className="text-xl text-gray-700 hover:text-red-500" />
             {wishlistCount > 0 && (
@@ -83,7 +87,7 @@ function NavBar({ setSearchResults, wishlistCount }) {
             )}
           </Link>
 
-        
+          {/* Shopping Cart Icon */}
           <button onClick={handleShopClick} className="relative focus:outline-none">
             <FaShoppingCart className="text-xl text-gray-700 hover:text-yellow-500" />
             {cartItems.length > 0 && (
@@ -93,13 +97,14 @@ function NavBar({ setSearchResults, wishlistCount }) {
             )}
           </button>
 
-         
+          {/* User Profile / Login Button */}
           {token ? (
             <div className="relative">
               <button onClick={() => setShowDropdown(!showDropdown)} className="focus:outline-none">
                 <FaUser className="text-xl text-gray-700 hover:text-blue-500" />
               </button>
 
+              {/* Dropdown Menu for Logout */}
               {showDropdown && (
                 <div className="absolute right-0 mt-2 w-36 bg-white shadow-md border rounded-md">
                   <button
@@ -124,7 +129,7 @@ function NavBar({ setSearchResults, wishlistCount }) {
         </div>
       </div>
 
-    
+      {/* Mobile Menu (visible on smaller screens) */}
       {showMobileMenu && (
         <div className="md:hidden px-4 py-2">
           {!isLoginPage && (
@@ -155,7 +160,7 @@ function NavBar({ setSearchResults, wishlistCount }) {
         </div>
       )}
 
-    
+      {/* Desktop Navigation Links */}
       <div className="hidden md:flex items-center justify-center space-x-20 py-4 text-sm font-bold">
         <Link to="/" className="hover:underline">Home</Link>
         <Link to="/shop" className="hover:underline">Shop</Link>

@@ -3,9 +3,12 @@ import CategariesSection from "./CategariesSection";
 import AllProducts from "./AllProducts";
 import InfoSection from "./InfoSection";
 
+// Home component that includes a banner, category section, and product listing
 const Home = ({ setSearchResults, wishlist, toggleWishlist }) => {
+  // Ref to scroll to AllProducts section when "Shop Now" is clicked
   const allProductsRef = useRef(null);
 
+  // Smooth scroll to the AllProducts section
   const handleShopNowClick = () => {
     if (allProductsRef.current) {
       allProductsRef.current.scrollIntoView({ behavior: "smooth" });
@@ -14,6 +17,7 @@ const Home = ({ setSearchResults, wishlist, toggleWishlist }) => {
 
   return (
     <div className="bg-white mt-2 px-4 md:px-16 lg:px-24">
+      {/* Hero section with background image */}
       <div
         className="relative w-full h-[400px] md:h-[500px] bg-cover bg-center flex items-center justify-center text-white"
         style={{
@@ -21,6 +25,7 @@ const Home = ({ setSearchResults, wishlist, toggleWishlist }) => {
             "url('https://images.unsplash.com/photo-1734772337649-79615ba2f176?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzJ8fGtpZHMlMjBzaG9wcGluZ3xlbnwwfHwwfHx8MA%3D%3D')", // Replace with your image URL
         }}
       >
+        {/* Dark overlay for better text visibility */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
@@ -37,8 +42,14 @@ const Home = ({ setSearchResults, wishlist, toggleWishlist }) => {
           </button>
         </div>
       </div>
+
+      {/* Information section */}
       <InfoSection />
+
+      {/* Category section with search functionality */}
       <CategariesSection setSearchResults={setSearchResults} />
+
+      {/* Product listing section */}
       <div ref={allProductsRef}>
         <AllProducts wishlist={wishlist} toggleWishlist={toggleWishlist} />
       </div>
