@@ -61,7 +61,7 @@ const AppContent = () => {
         <div>
           <NavBar setSearchResults={setSearchResults} wishlistCount={wishlist.length} /> {/* ✅ Fixed */}
           <Routes>
-            <Route path="/" element={<Home wishlist={wishlist} toggleWishlist={toggleWishlist} />} />
+          <Route path="/" element={<Home setSearchResults={setSearchResults} wishlist={wishlist} toggleWishlist={toggleWishlist} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/products" element={<Products products={searchResults} wishlist={wishlist} toggleWishlist={toggleWishlist} />} />
