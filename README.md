@@ -40,8 +40,9 @@ API Requests: Fetch API / Axios
 
 **Clone the repository:**
 
-git clone https://github.com/your-username/e-shop.git
-cd e-shop
+https://github.com/sushilvpatil/Ecommerce_Website.git
+
+cd Ecommerce_Website
 
 **Install dependencies:**
 
